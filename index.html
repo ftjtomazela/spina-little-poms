@@ -1,817 +1,433 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spina Little Poms - Canil Especializado</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #FF6FB5; /* Rosa */
-            --secondary-color: #88D1F1; /* Azul claro */
-            --accent-color: #6C4AB6; /* Roxo/azul escuro */
-            --light-color: #E9F8FF; /* Azul muito claro */
-            --dark-color: #515151; /* Cinza escuro para texto */
-            --accent-yellow: #FFEB99; /* Amarelo claro */
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        body {
-            background-color: var(--light-color);
-            color: var(--dark-color);
-            line-height: 1.6;
-        }
-        
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 1rem;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
-        
-        .logo span {
-            color: var(--accent-yellow);
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 2rem;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-        
-        .hero {
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 1rem;
-            position: relative;
-        }
-        
-        .hero-content {
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 2rem;
-            border-radius: 20px;
-            max-width: 800px;
-        }
-        
-        .hero-logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 5px solid var(--accent-yellow);
-            margin-bottom: 1rem;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        
-        .btn:hover {
-            background-color: #5539A8;
-            transform: translateY(-3px);
-        }
-        
-        section {
-            padding: 5rem 2rem;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--primary-color);
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .section-title:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent-color);
-            border-radius: 2px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-        
-        .about-img {
-            flex: 1;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .about-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-        
-        .breeds {
-            background-color: var(--light-color);
-            text-align: center;
-            padding: 5rem 2rem;
-            background-image: linear-gradient(to bottom, var(--light-color) 80%, white);
-        }
-        
-        .breeds-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-        }
-        
-        .breed-card {
-            background-color: white;
-            border-radius: 20px;
-            overflow: hidden;
-            width: 350px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .breed-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        
-        .breed-img {
-            height: 250px;
-            overflow: hidden;
-        }
-        
-        .breed-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .breed-info {
-            padding: 1.5rem;
-        }
-        
-        .breed-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        .breed-info p {
-            margin-bottom: 1.5rem;
-        }
-        
-        .gallery {
-            background-color: white;
-        }
-        
-        .gallery-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        
-        .gallery-item {
-            height: 250px;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: all 0.3s ease;
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        .testimonials {
-            background-color: var(--secondary-color);
-            background-image: linear-gradient(45deg, var(--secondary-color), var(--light-color));
-        }
-        
-        .testimonials-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-        }
-        
-        .testimonial-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            width: 350px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .testimonial-author img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        
-        .author-info h4 {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-        }
-        
-        .contact {
-            background-color: white;
-        }
-        
-        .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 3rem;
-        }
-        
-        .contact-info {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .contact-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary-color);
-        }
-        
-        .contact-details {
-            margin-bottom: 2rem;
-        }
-        
-        .contact-details p {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .contact-details i {
-            margin-right: 1rem;
-            color: var(--accent-color);
-        }
-        
-        .contact-form {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-        
-        textarea.form-control {
-            height: 150px;
-            resize: vertical;
-        }
-        
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            background-image: linear-gradient(to bottom, var(--primary-color), #e05a9b);
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            margin: 1rem 0;
-        }
-        
-        .footer-links li {
-            margin: 0 1rem;
-        }
-        
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-        }
-        
-        .footer-links a:hover {
-            color: var(--accent-color);
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            margin: 1rem 0;
-        }
-        
-        .social-links li {
-            margin: 0 1rem;
-        }
-        
-        .social-links a {
-            color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            color: var(--accent-color);
-        }
-        
-        /* Seção de Filhotes Disponíveis */
-        .available-puppies {
-            background-color: var(--light-color);
-            background-image: linear-gradient(to bottom, white 10%, var(--light-color));
-        }
-        
-        .puppies-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-        }
-        
-        .puppy-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            width: 300px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .puppy-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        
-        .puppy-img {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .puppy-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .puppy-info {
-            padding: 1.5rem;
-        }
-        
-        .puppy-info h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
-        
-        .puppy-info p {
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .puppy-info .price {
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: var(--accent-color);
-            margin: 1rem 0;
-        }
-        
-        /* FAQ Section */
-        .faq {
-            background-color: white;
-        }
-        
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .faq-item {
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 1.5rem;
-        }
-        
-        .faq-question {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        .faq-answer {
-            line-height: 1.6;
-        }
-        
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .contact-container {
-                flex-direction: column;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="#" class="logo">Spina <span>Little Poms</span></a>
-            <ul class="nav-links">
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#racas">Raças</a></li>
-                <li><a href="#filhotes">Filhotes</a></li>
-                <li><a href="#galeria">Galeria</a></li>
-                <li><a href="#depoimentos">Depoimentos</a></li>
-                <li><a href="#faq">Perguntas Frequentes</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
+import React, { useState } from ‘react’;
+import { ShoppingCart, Plus, Minus, Trash2, Send } from ‘lucide-react’;
 
-    <section class="hero" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/api/placeholder/1200/800') center/cover no-repeat; background-color: var(--secondary-color);">
-        <div class="hero-content">
-            <img src="/api/placeholder/150/150" alt="Logo Spina Little Poms" class="hero-logo">
-            <h1>Canil Spina Little Poms</h1>
-            <p>Criadores especializados em Spitz Alemão e Shih Tzu com pedigree de excelência</p>
-            <a href="#filhotes" class="btn">Ver Filhotes Disponíveis</a>
-        </div>
-    </section>
+const App = () => {
+const [cart, setCart] = useState([]);
+const [showCart, setShowCart] = useState(false);
 
-    <section id="sobre" class="about">
-        <div class="container">
-            <h2 class="section-title">Sobre Nosso Canil</h2>
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="/api/placeholder/600/400" alt="Canil Spina Little Poms">
-                </div>
-                <div class="about-text">
-                    <h3>Nossa História e Compromisso</h3>
-                    <p>O Canil Spina Little Poms nasceu da paixão por cães de raça e do compromisso com a excelência genética. Há mais de 10 anos, dedicamos nosso trabalho à criação de Spitz Alemão e Shih Tzu saudáveis, de temperamento equilibrado e com padrões de raça impecáveis.</p>
-                    <p>Nossos reprodutores são selecionados criteriosamente, todos com pedigree e exames de saúde em dia. Priorizamos o bem-estar dos nossos cães acima de tudo, oferecendo instalações amplas, alimentação premium e acompanhamento veterinário constante.</p>
-                    <a href="#contato" class="btn">Entre em Contato</a>
-                </div>
+const lanches = [
+{
+id: 1,
+nome: ‘CLÁSSICO PERNIL’,
+descricao: ‘Pernil desfiado no tempero da casa, queijo mussarela derretido, alface americana, tomate fresco e maionese Heinz no pão’,
+preco: 25.00,
+imagem: ‘🥖’
+},
+{
+id: 2,
+nome: ‘FRANGO CREMOSO’,
+descricao: ‘Frango desfiado temperado, Catupiry original cremoso, milho verde, rucula fresca e pão hot dog brioche amante’,
+preco: 23.00,
+imagem: ‘🥖’
+},
+{
+id: 3,
+nome: ‘COSTELA BBQ’,
+descricao: ‘Costela bovina desfiada e suculenta, queijo provolone derretido, cebola caramelizada e molho barbecue artesanal’,
+preco: 28.00,
+imagem: ‘🥖’
+}
+];
+
+const bebidas = [
+{ id: 101, nome: ‘Fanta Lata 350ml’, preco: 6.00, imagem: ‘🥤’ },
+{ id: 102, nome: ‘Coca-Cola Lata 350ml’, preco: 6.00, imagem: ‘🥤’ },
+{ id: 103, nome: ‘Refrigerante Bellpar 600ml’, preco: 8.00, imagem: ‘🥤’ },
+{ id: 104, nome: ‘Coca-Cola 2L’, preco: 12.00, imagem: ‘🥤’ },
+{ id: 105, nome: ‘Refrigerante Bellpar 2L’, preco: 10.00, imagem: ‘🥤’ }
+];
+
+const adicionais = [
+{ id: ‘bacon’, nome: ‘Bacon Extra’, preco: 5.00 },
+{ id: ‘queijo’, nome: ‘Queijo Extra’, preco: 4.00 },
+{ id: ‘carne’, nome: ‘Carne Extra’, preco: 8.00 },
+{ id: ‘catupiry’, nome: ‘Catupiry Extra’, preco: 5.00 },
+{ id: ‘cebola’, nome: ‘Cebola Caramelizada’, preco: 3.00 }
+];
+
+const remocoes = [
+{ id: ‘sem-bacon’, nome: ‘Sem Bacon’ },
+{ id: ‘sem-queijo’, nome: ‘Sem Queijo’ },
+{ id: ‘sem-alface’, nome: ‘Sem Alface’ },
+{ id: ‘sem-tomate’, nome: ‘Sem Tomate’ },
+{ id: ‘sem-maionese’, nome: ‘Sem Maionese’ }
+];
+
+const [modalItem, setModalItem] = useState(null);
+const [selectedAdicionais, setSelectedAdicionais] = useState([]);
+const [selectedRemocoes, setSelectedRemocoes] = useState([]);
+const [observacao, setObservacao] = useState(’’);
+
+const addToCart = (item, tipo) => {
+if (tipo === ‘lanche’) {
+setModalItem({ …item, tipo });
+setSelectedAdicionais([]);
+setSelectedRemocoes([]);
+setObservacao(’’);
+} else {
+setCart([…cart, { …item, tipo, id: Date.now() }]);
+}
+};
+
+const confirmLanche = () => {
+const itemCompleto = {
+…modalItem,
+adicionais: […selectedAdicionais],
+remocoes: […selectedRemocoes],
+observacao,
+id: Date.now(),
+precoTotal: modalItem.preco + selectedAdicionais.reduce((sum, ad) => sum + ad.preco, 0)
+};
+setCart([…cart, itemCompleto]);
+setModalItem(null);
+};
+
+const removeFromCart = (id) => {
+setCart(cart.filter(item => item.id !== id));
+};
+
+const updateQuantity = (id, delta) => {
+setCart(cart.map(item => {
+if (item.id === id) {
+const newQtd = (item.quantidade || 1) + delta;
+if (newQtd <= 0) return null;
+return { …item, quantidade: newQtd };
+}
+return item;
+}).filter(Boolean));
+};
+
+const calcularTotal = () => {
+return cart.reduce((total, item) => {
+const preco = item.precoTotal || item.preco;
+const qtd = item.quantidade || 1;
+return total + (preco * qtd);
+}, 0);
+};
+
+const enviarPedido = () => {
+if (cart.length === 0) {
+alert(‘Adicione itens ao carrinho primeiro!’);
+return;
+}
+
+```
+let mensagem = '*🍔 NOVO PEDIDO - LANCHES GOURMET*\n\n';
+
+cart.forEach((item, index) => {
+  const qtd = item.quantidade || 1;
+  mensagem += `*${index + 1}. ${item.nome}* (${qtd}x)\n`;
+  mensagem += `   💰 R$ ${((item.precoTotal || item.preco) * qtd).toFixed(2)}\n`;
+  
+  if (item.adicionais && item.adicionais.length > 0) {
+    mensagem += `   ➕ Adicionais: ${item.adicionais.map(a => a.nome).join(', ')}\n`;
+  }
+  
+  if (item.remocoes && item.remocoes.length > 0) {
+    mensagem += `   ➖ Remover: ${item.remocoes.map(r => r.nome).join(', ')}\n`;
+  }
+  
+  if (item.observacao) {
+    mensagem += `   📝 Obs: ${item.observacao}\n`;
+  }
+  mensagem += '\n';
+});
+
+mensagem += `*TOTAL: R$ ${calcularTotal().toFixed(2)}*\n\n`;
+mensagem += '_Delivery em Conchas-SP_';
+
+const whatsappUrl = `https://wa.me/5514981722063?text=${encodeURIComponent(mensagem)}`;
+window.open(whatsappUrl, '_blank');
+```
+
+};
+
+return (
+<div className="min-h-screen bg-gray-900 text-white">
+{/* Header */}
+<header className="bg-black py-6 px-4 sticky top-0 z-40 border-b-2 border-yellow-600">
+<div className="max-w-6xl mx-auto flex justify-between items-center">
+<div>
+<h1 className="text-3xl font-bold text-yellow-500">🍔 LANCHES GOURMET</h1>
+<p className="text-yellow-400 text-sm">Delivery em Conchas-SP</p>
+</div>
+<button
+onClick={() => setShowCart(!showCart)}
+className=“bg-yellow-600 hover:bg-yellow-700 px-4 py-3 rounded-lg flex items-center gap-2 transition”
+>
+<ShoppingCart size={24} />
+<span className="font-bold">{cart.length}</span>
+</button>
+</div>
+</header>
+
+```
+  {/* Main Content */}
+  <main className="max-w-6xl mx-auto p-4 pb-32">
+    {/* Lanches Section */}
+    <section className="mb-12">
+      <h2 className="text-2xl font-bold text-yellow-500 mb-6 flex items-center gap-2">
+        🔥 Nossos Lanches
+      </h2>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {lanches.map(lanche => (
+          <div key={lanche.id} className="bg-gray-800 rounded-lg overflow-hidden border-2 border-gray-700 hover:border-yellow-600 transition">
+            <div className="text-6xl text-center py-6 bg-gray-700">
+              {lanche.imagem}
             </div>
-        </div>
-    </section>
-
-    <section id="racas" class="breeds">
-        <div class="container">
-            <h2 class="section-title">Nossas Raças</h2>
-            <div class="breeds-container">
-                <div class="breed-card">
-                    <div class="breed-img">
-                        <img src="/api/placeholder/400/300" alt="Spitz Alemão">
-                    </div>
-                    <div class="breed-info">
-                        <h3>Spitz Alemão</h3>
-                        <p>O Spitz Alemão, também conhecido como Lulu da Pomerânia, é uma raça encantadora conhecida por sua pelagem exuberante e personalidade vibrante. São cães companheiros ideais, inteligentes e cheios de energia.</p>
-                        <p>No canil Spina Little Poms, trabalhamos com as variedades anão e toy nas cores mais procuradas, como branco, laranja, black and tan e particolor.</p>
-                        <a href="#filhotes" class="btn">Ver Filhotes</a>
-                    </div>
-                </div>
-                <div class="breed-card">
-                    <div class="breed-img">
-                        <img src="/api/placeholder/400/300" alt="Shih Tzu">
-                    </div>
-                    <div class="breed-info">
-                        <h3>Shih Tzu</h3>
-                        <p>O Shih Tzu é uma raça milenar originária do Tibete, conhecida por seu temperamento dócil e afetuoso. São cães de companhia por excelência, adaptáveis e carinhosos com toda a família.</p>
-                        <p>Nossos exemplares de Shih Tzu possuem excelente estrutura, pelagem abundante e sedosa, e faces típicas da raça, com diversas cores como gold, tricolor e particolor.</p>
-                        <a href="#filhotes" class="btn">Ver Filhotes</a>
-                    </div>
-                </div>
+            <div className="p-4">
+              <h3 className="text-xl font-bold text-yellow-400 mb-2">{lanche.nome}</h3>
+              <p className="text-gray-300 text-sm mb-4">{lanche.descricao}</p>
+              <div className="flex justify-between items-center">
+                <span className="text-2xl font-bold text-yellow-500">R$ {lanche.preco.toFixed(2)}</span>
+                <button
+                  onClick={() => addToCart(lanche, 'lanche')}
+                  className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded-lg font-bold transition"
+                >
+                  Adicionar
+                </button>
+              </div>
             </div>
-        </div>
+          </div>
+        ))}
+      </div>
     </section>
 
-    <section id="filhotes" class="available-puppies">
-        <div class="container">
-            <h2 class="section-title">Filhotes Disponíveis</h2>
-            <div class="puppies-container">
-                <div class="puppy-card">
-                    <div class="puppy-img">
-                        <img src="/api/placeholder/300/200" alt="Filhote Spitz Alemão Branco">
-                    </div>
-                    <div class="puppy-info">
-                        <h3>Spitz Alemão Branco</h3>
-                        <p><span>Idade:</span> <span>2 meses</span></p>
-                        <p><span>Sexo:</span> <span>Macho</span></p>
-                        <p><span>Porte:</span> <span>Anão</span></p>
-                        <p><span>Pedigree:</span> <span>Sim (CBKC)</span></p>
-                        <p class="price">R$ 4.500,00</p>
-                        <a href="#contato" class="btn">Reservar</a>
-                    </div>
+    {/* Bebidas Section */}
+    <section>
+      <h2 className="text-2xl font-bold text-yellow-500 mb-6 flex items-center gap-2">
+        🥤 Bebidas
+      </h2>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {bebidas.map(bebida => (
+          <div key={bebida.id} className="bg-gray-800 rounded-lg p-4 border-2 border-gray-700 hover:border-yellow-600 transition">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-4xl">{bebida.imagem}</span>
+                <div>
+                  <h3 className="font-bold text-yellow-400">{bebida.nome}</h3>
+                  <p className="text-xl text-yellow-500">R$ {bebida.preco.toFixed(2)}</p>
                 </div>
-                <div class="puppy-card">
-                    <div class="puppy-img">
-                        <img src="/api/placeholder/300/200" alt="Filhote Spitz Alemão Laranja">
-                    </div>
-                    <div class="puppy-info">
-                        <h3>Spitz Alemão Laranja</h3>
-                        <p><span>Idade:</span> <span>3 meses</span></p>
-                        <p><span>Sexo:</span> <span>Fêmea</span></p>
-                        <p><span>Porte:</span> <span>Toy</span></p>
-                        <p><span>Pedigree:</span> <span>Sim (CBKC)</span></p>
-                        <p class="price">R$ 5.200,00</p>
-                        <a href="#contato" class="btn">Reservar</a>
-                    </div>
-                </div>
-                <div class="puppy-card">
-                    <div class="puppy-img">
-                        <img src="/api/placeholder/300/200" alt="Filhote Shih Tzu Gold">
-                    </div>
-                    <div class="puppy-info">
-                        <h3>Shih Tzu Gold</h3>
-                        <p><span>Idade:</span> <span>2 meses</span></p>
-                        <p><span>Sexo:</span> <span>Macho</span></p>
-                        <p><span>Porte:</span> <span>Padrão</span></p>
-                        <p><span>Pedigree:</span> <span>Sim (CBKC)</span></p>
-                        <p class="price">R$ 3.800,00</p>
-                        <a href="#contato" class="btn">Reservar</a>
-                    </div>
-                </div>
-                <div class="puppy-card">
-                    <div class="puppy-img">
-                        <img src="/api/placeholder/300/200" alt="Filhote Shih Tzu Tricolor">
-                    </div>
-                    <div class="puppy-info">
-                        <h3>Shih Tzu Tricolor</h3>
-                        <p><span>Idade:</span> <span>3 meses</span></p>
-                        <p><span>Sexo:</span> <span>Fêmea</span></p>
-                        <p><span>Porte:</span> <span>Padrão</span></p>
-                        <p><span>Pedigree:</span> <span>Sim (CBKC)</span></p>
-                        <p class="price">R$ 4.000,00</p>
-                        <a href="#contato" class="btn">Reservar</a>
-                    </div>
-                </div>
+              </div>
+              <button
+                onClick={() => addToCart(bebida, 'bebida')}
+                className="bg-yellow-600 hover:bg-yellow-700 p-2 rounded-lg transition"
+              >
+                <Plus size={24} />
+              </button>
             </div>
-        </div>
+          </div>
+        ))}
+      </div>
     </section>
+  </main>
 
-    <section id="galeria" class="gallery">
-        <div class="container">
-            <h2 class="section-title">Galeria de Fotos</h2>
-            <div class="gallery-container">
-                <div class="gallery-item">
-                    <img src="/api/placeholder/300/300" alt="Spitz Alemão">
-                </div>
-                <div class="gallery-item">
-                    <img src="/api/placeholder/300/300" alt="Shih Tzu">
-                </div>
-                <div class="gallery-item">
-                    <img src="/api/placeholder/300/300" alt="Filhotes Spitz">
-                </div>
-                <div class="gallery-item">
-                    <img src="/api/placeholder/300/300" alt="Filhotes Shih Tzu">
-                </div>
-                <div class="gallery-item">
-                    <img src="/api/placeholder/300/300" alt="Matriz Spitz">
-                </div>
-                <div class="gallery-item">
-                    <img src="/api/placeholder/300/300" alt="Matriz Shih Tzu">
-                </div>
-                <div class="gallery-item">
-                    <img src="/api/placeholder/300/300" alt="Canil Estrutura">
-                </div>
-                <div class="gallery-item">
-                    <img src="/api/placeholder/300/300" alt="Exposição Canina">
-                </div>
+  {/* Modal de Personalização */}
+  {modalItem && (
+    <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4" onClick={() => setModalItem(null)}>
+      <div className="bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-yellow-600" onClick={(e) => e.stopPropagation()}>
+        {/* Header do Modal */}
+        <div className="bg-gray-900 p-4 rounded-t-lg border-b-2 border-yellow-600 flex justify-between items-center sticky top-0 z-10">
+          <h2 className="text-2xl font-bold text-yellow-500">{modalItem.nome}</h2>
+          <button 
+            onClick={() => setModalItem(null)}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg text-xl"
+          >
+            ✕ Fechar
+          </button>
+        </div>
+
+        <div className="p-6">
+          {/* Adicionais */}
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-yellow-400 mb-3">➕ Adicionais</h3>
+            <div className="space-y-2">
+              {adicionais.map(ad => (
+                <label key={ad.id} className="flex items-center gap-3 bg-gray-700 p-3 rounded cursor-pointer hover:bg-gray-600">
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedAdicionais([...selectedAdicionais, ad]);
+                      } else {
+                        setSelectedAdicionais(selectedAdicionais.filter(a => a.id !== ad.id));
+                      }
+                    }}
+                  />
+                  <span className="flex-1">{ad.nome}</span>
+                  <span className="text-yellow-500 font-bold">+ R$ {ad.preco.toFixed(2)}</span>
+                </label>
+              ))}
             </div>
-        </div>
-    </section>
+          </div>
 
-    <section id="depoimentos" class="testimonials">
-        <div class="container">
-            <h2 class="section-title">Depoimentos de Clientes</h2>
-            <div class="testimonials-container">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"Adotamos nossa Lulu da Pomerânia há 2 anos e foi a melhor decisão que tomamos. Ela é saudável, inteligente e extremamente carinhosa. O suporte do canil Spina Little Poms foi excepcional durante todo o processo."</p>
-                    <div class="testimonial-author">
-                        <img src="/api/placeholder/50/50" alt="Cliente">
-                        <div class="author-info">
-                            <h4>Ana Paula Silva</h4>
-                            <p>São Paulo, SP</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"Nosso Shih Tzu do canil Spina é um verdadeiro príncipe! Além de lindo, tem um temperamento maravilhoso. Os criadores são muito sérios e nos ofereceram todo o suporte necessário. Super recomendo!"</p>
-                    <div class="testimonial-author">
-                        <img src="/api/placeholder/50/50" alt="Cliente">
-                        <div class="author-info">
-                            <h4>Carlos Oliveira</h4>
-                            <p>Rio de Janeiro, RJ</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"Procuramos por vários canis antes de encontrar o Spina Little Poms. A diferença está no cuidado com os filhotes e na transparência do processo. Nossa Spitz é saudável e com excelente temperamento, exatamente como prometido."</p>
-                    <div class="testimonial-author">
-                        <img src="/api/placeholder/50/50" alt="Cliente">
-                        <div class="author-info">
-                            <h4>Patrícia Mendes</h4>
-                            <p>Belo Horizonte, MG</p>
-                        </div>
-                    </div>
-                </div>
+          {/* Remoções */}
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-yellow-400 mb-3">➖ Remover Ingredientes</h3>
+            <div className="space-y-2">
+              {remocoes.map(rem => (
+                <label key={rem.id} className="flex items-center gap-3 bg-gray-700 p-3 rounded cursor-pointer hover:bg-gray-600">
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedRemocoes([...selectedRemocoes, rem]);
+                      } else {
+                        setSelectedRemocoes(selectedRemocoes.filter(r => r.id !== rem.id));
+                      }
+                    }}
+                  />
+                  <span>{rem.nome}</span>
+                </label>
+              ))}
             </div>
-        </div>
-    </section>
+          </div>
 
-    <section id="faq" class="faq">
-        <div class="container">
-            <h2 class="section-title">Perguntas Frequentes</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <h3 class="faq-question">Como funciona o processo de reserva de um filhote?</h3>
-                    <p class="faq-answer">Para reservar um filhote, é necessário entrar em contato conosco via telefone ou e-mail. Após a escolha do filhote, solicitamos um sinal de 30% do valor total para garantir a reserva. O restante é pago na retirada do filhote.</p>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">Os filhotes são entregues com vacinas e vermífugos?</h3>
-                    <p class="faq-answer">Sim, todos os nossos filhotes são entregues com a primeira dose da vacina V10 (ou V8 para raças pequenas), microchip e devidamente vermifugados. Também fornecemos uma carteira de vacinação com o registro de todas as aplicações.</p>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">Vocês oferecem garantia genética?</h3>
-                    <p class="faq-answer">Sim, oferecemos garantia genética por escrito de 1 ano contra problemas congênitos que possam afetar a qualidade de vida do animal. Todos os nossos reprodutores passam por exames específicos para garantir a saúde da linhagem.</p>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">Enviam filhotes para outros estados?</h3>
-                    <p class="faq-answer">Sim, realizamos envios para todo o Brasil através de empresas especializadas em transporte de animais, com acompanhamento veterinário. O custo do envio é calculado conforme o destino e informado previamente ao cliente.</p>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">Qual a idade ideal para levar o filhote para casa?</h3>
-                    <p class="faq-answer">Nossos filhotes são liberados a partir dos 60 dias de vida, quando já estão desmamados, com a primeira dose da vacina aplicada e adaptados à alimentação sólida. Este é o período ideal para a adaptação ao novo lar.</p>
-                </div>
+          {/* Observações */}
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-yellow-400 mb-3">📝 Observações</h3>
+            <textarea
+              className="w-full bg-gray-700 text-white p-3 rounded border-2 border-gray-600 focus:border-yellow-500 outline-none"
+              rows="3"
+              placeholder="Alguma observação especial?"
+              value={observacao}
+              onChange={(e) => setObservacao(e.target.value)}
+            />
+          </div>
+
+          {/* Preço Total */}
+          <div className="bg-gray-700 p-4 rounded mb-4">
+            <div className="flex justify-between items-center text-xl">
+              <span className="font-bold">Total:</span>
+              <span className="text-yellow-500 font-bold">
+                R$ {(modalItem.preco + selectedAdicionais.reduce((sum, ad) => sum + ad.preco, 0)).toFixed(2)}
+              </span>
             </div>
-        </div>
-    </section>
+          </div>
 
-    <section id="contato" class="contact">
-        <div class="container">
-            <h2 class="section-title">Entre em Contato</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Informações de Contato</h3>
-                    <div class="contact-details">
-                        <p><i>📱</i> (11) 98765-4321</p>
-                        <p><i>📧</i> contato@spinalittlepoms.com.br</p>
-                        <p><i>📍</i> São Paulo - SP (Visitas com agendamento prévio)</p>
-                        <p><i>⏰</i> Atendimento: Seg. a Sex. das 9h às 18h | Sáb. das 9h às 12h</p>
+          {/* Botões */}
+          <div className="flex gap-3">
+            <button
+              onClick={() => setModalItem(null)}
+              className="flex-1 bg-gray-600 hover:bg-gray-500 py-3 rounded-lg font-bold transition"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={confirmLanche}
+              className="flex-1 bg-yellow-600 hover:bg-yellow-700 py-3 rounded-lg font-bold transition"
+            >
+              Adicionar ao Carrinho
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* Carrinho Lateral */}
+  {showCart && (
+    <div className="fixed inset-0 bg-black bg-opacity-80 z-50" onClick={() => setShowCart(false)}>
+      <div 
+        className="absolute right-0 top-0 h-full w-full max-w-md bg-gray-800 shadow-2xl flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header do Carrinho */}
+        <div className="p-6 border-b border-gray-700">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-bold text-yellow-500">🛒 Seu Pedido</h2>
+            <button onClick={() => setShowCart(false)} className="text-3xl hover:text-yellow-500">×</button>
+          </div>
+        </div>
+
+        {/* Conteúdo do Carrinho - Scrollable */}
+        <div className="flex-1 overflow-y-auto p-6">
+          {cart.length === 0 ? (
+            <p className="text-center text-gray-400 py-12">Carrinho vazio</p>
+          ) : (
+            <div className="space-y-4">
+              {cart.map(item => (
+                <div key={item.id} className="bg-gray-700 p-4 rounded-lg">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-bold text-yellow-400">{item.nome}</h3>
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-red-500 hover:text-red-400"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  </div>
+                  
+                  {item.adicionais && item.adicionais.length > 0 && (
+                    <p className="text-sm text-gray-300 mb-1">
+                      ➕ {item.adicionais.map(a => a.nome).join(', ')}
+                    </p>
+                  )}
+                  
+                  {item.remocoes && item.remocoes.length > 0 && (
+                    <p className="text-sm text-gray-300 mb-1">
+                      ➖ {item.remocoes.map(r => r.nome).join(', ')}
+                    </p>
+                  )}
+                  
+                  {item.observacao && (
+                    <p className="text-sm text-gray-300 mb-2">📝 {item.observacao}</p>
+                  )}
+
+                  <div className="flex justify-between items-center mt-3">
+                    <div className="flex items-center gap-3 bg-gray-600 rounded px-2 py-1">
+                      <button onClick={() => updateQuantity(item.id, -1)} className="hover:text-yellow-500">
+                        <Minus size={18} />
+                      </button>
+                      <span className="font-bold">{item.quantidade || 1}</span>
+                      <button onClick={() => updateQuantity(item.id, 1)} className="hover:text-yellow-500">
+                        <Plus size={18} />
+                      </button>
                     </div>
-                    <h3>Nos siga nas redes sociais</h3>
-                    <ul class="social-links">
-                        <li><a href="#"><i>📱</i> Instagram</a></li>
-                        <li><a href="#"><i>👍</i> Facebook</a></li>
-                        <li><a href="#"><i>▶️</i> YouTube</a></li>
-                    </ul>
+                    <span className="text-yellow-500 font-bold">
+                      R$ {((item.precoTotal || item.preco) * (item.quantidade || 1)).toFixed(2)}
+                    </span>
+                  </div>
                 </div>
-                <div class="contact-form">
-                    <form>
-                        <div class="form-group">
-                            <label for="name">Nome Completo</label>
-                            <input type="text" id="name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" class="form-
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Footer do Carrinho - Fixo */}
+        {cart.length > 0 && (
+          <div className="p-6 border-t-2 border-gray-700 bg-gray-800">
+            <div className="bg-gray-700 p-4 rounded-lg mb-4">
+              <div className="flex justify-between items-center text-2xl">
+                <span className="font-bold">TOTAL:</span>
+                <span className="text-yellow-500 font-bold">R$ {calcularTotal().toFixed(2)}</span>
+              </div>
+            </div>
+
+            <button
+              onClick={enviarPedido}
+              className="w-full bg-green-600 hover:bg-green-700 py-4 rounded-lg font-bold text-lg flex items-center justify-center gap-2 transition"
+            >
+              <Send size={24} />
+              Enviar Pedido pelo WhatsApp
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  {/* Footer */}
+  <footer className="fixed bottom-0 left-0 right-0 bg-black border-t-2 border-yellow-600 p-4 text-center">
+    <p className="text-yellow-500 font-bold">📱 WhatsApp: (14) 98172-2063</p>
+    <p className="text-sm text-gray-400">Delivery em Conchas-SP</p>
+  </footer>
+</div>
+```
+
+);
+};
+
+export default App;
